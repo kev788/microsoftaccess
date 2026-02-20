@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+
+<title>Components</title>
+
+<style>
+body{
+  background:black;
+  margin:0;
+  padding:0;
+  font-family:"Host Grotesk",sans-serif;
+}
+
+nav{
+  height:50px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:5px 4%;
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  background:black;
+  z-index:100;
+  padding-top: 12px;
+}
+
+.buttonnav{
+  padding:0.75rem 1.5rem;
+  background:rgba(255,255,255,0.1);
+  border:1px solid rgba(255,255,255,0.3);
+  color:white;
+  text-decoration:none;
+  font-size:0.875rem;
+  letter-spacing:0.05em;
+  text-transform:uppercase;
+  backdrop-filter:blur(10px);
+  border-radius:50px;
+  margin-left:10px;
+  transition:0.3s ease;
+}
+
+.buttonnav:hover{
+  background:white;
+  color:black;
+}
+
+.navtitle{
+  font-size:22px;
+  color:white;
+  text-decoration:none;
+}
+
+.title h1{
+  color:white;
+  font-size:150px;
+  margin-left:5%;
+  margin-top:120px;
+  margin-bottom:0;
+}
+
+.title p{
+  font-size:30px;
+  color:#9C9E9D;
+  margin-left:5.5%;
+  margin-top:0;
+  margin-bottom:80px;
+}
+
+.introWrapp{
+  border-bottom:1px solid rgba(255,255,255,0.2);
+  overflow:hidden;
+}
+
+.intro{
+  position:relative;
+  height:140px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 5%;
+  color:white;
+  overflow:hidden;
+  cursor:pointer;
+  transition:color 0.4s ease, transform 0.4s ease;
+}
+
+.intro::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:#EDEBE9;
+  transform:translateY(100%);
+  transition:transform 0.5s cubic-bezier(.77,0,.18,1);
+  z-index:0;
+}
+
+.intro h2,
+.intro p{
+  position:relative;
+  z-index:2;
+  transition:0.4s ease;
+}
+
+.intro h2{
+  font-size:50px;
+  font-weight:300;
+  margin:0;
+}
+
+.subintro{
+  display:flex;
+  align-items:center;
+  gap:60px;
+}
+
+.subintro p{
+  font-size:30px;
+  font-weight:200;
+  margin:0;
+}
+
+.toggleIconn{
+  font-size:36px;
+  font-weight:200;
+  line-height:1;
+  display:inline-block;
+  transition:transform 0.4s cubic-bezier(.77,0,.18,1);
+}
+
+.hoverImg{
+  position:absolute;
+  right: 30%;
+  top:50%;
+  transform:translateY(-50%) scale(0.8) rotate(-8deg);
+  width:220px;
+  border-radius:20px;
+  opacity:0;
+  transition:all 0.5s cubic-bezier(.77,0,.18,1);
+  z-index:3;
+  pointer-events:none;
+}
+
+.introWrapp:not(.active) .intro:hover::before{
+  transform:translateY(0);
+}
+
+.introWrapp:not(.active) .intro:hover{
+  color:black;
+  transform:scale(1.01);
+}
+
+.introWrapp:not(.active) .intro:hover .hoverImg{
+  opacity:1;
+  transform:translateY(-50%) scale(1) rotate(0deg);
+}
+
+.introWrapp.active .intro{
+  color:black;
+}
+
+.introWrapp.active .intro::before{
+  transform:translateY(0);
+}
+
+.introWrapp.active .toggleIconn{
+  transform:rotate(45deg);
+}
+
+.expPan{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height 0.6s cubic-bezier(.77,0,.18,1);
+  background:#EDEBE9;
+}
+
+.expInn{
+  padding:40px 5% 60px;
+  color:#1a1a1a;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:60px;
+}
+
+.expContent{
+  width:50%;
+}
+
+.expInn h3{
+  font-size:28px;
+  font-weight:600;
+  margin:0 0 16px;
+}
+
+.expInn p{
+  font-size:18px;
+  font-weight:300;
+  line-height:1.7;
+  max-width:700px;
+  margin:0;
+  color:#3a3a3a;
+}
+
+.introWrapp.active .expPan{
+  max-height:2000px;
+}
+
+.carousel{
+  width:50%;
+  max-width:600px;
+  position:relative;
+  overflow:hidden;
+  border-radius:16px;
+}
+
+.carousel-track{
+  display:flex;
+  transition:transform 0.5s ease;
+}
+
+.carousel img{
+  width:100%;
+  height:350px;
+  object-fit:contain;   
+  flex-shrink:0;
+  background:#EDEBE9;   
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.5);
+  border: none;
+  color: white;
+  font-size: 20px;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.carousel-btn.prev { left: 10px; }
+.carousel-btn.next { right: 10px; }
+
+</style>
+</head>
+
+<body>
+
+<nav>
+  <a href="index.html" class="navtitle">Microsoft Access</a>
+  <div>
+    <a href="index.html" class="buttonnav">Home</a>
+    <a href="explanation.html" class="buttonnav">Components</a>
+  </div>
+</nav>
+
+<div class="title">
+  <h1>Components</h1>
+  <p>Database explained greatly</p>
+</div>
+
+<div class="introWrapp">
+  <div class="intro">
+    <h2>Table</h2>
+    <div class="subintro">
+      <p>What is a table?</p>
+      <span class="toggleIconn">+</span>
+    </div>
+    <img src="table.jpg" class="hoverImg">
+  </div>
+  <div class="expPan">
+    <div class="expInn">
+
+      <div class="expContent">
+      <h3>Table</h3>
+      <p>The Table is used to store data in a structured format consisting of rows and columns. In Microsoft Access, you can choose between Datasheet View and Design View.</p>
+      <br>
+      <p>In the <strong>Datasheet View</strong>, you can look at your Data Field and Data Record. You can add and change your data record in this view, but can't change the properties and format of the data field.</p>
+      <p>In the <strong>Design View</strong>, you can add and change the field name, change the data type of the field, and change the properties of the field.</p>
+      <br>
+      <p>The data types include Short Text, Long Text, Number, Large Number, Date/Time, Currency, Auto Number, and many more.</p>
+      <br>
+      <p>The properties include Field Size, Format, Input Mask, Caption, Default Value, Required and many more.</p>
+      <p><strong>Field Size</strong> -> The maximum capacity for a text or a specific type of data that the field can hold<br>
+      <strong>Format</strong> -> Controls how the data is displayed in the tables, forms, queries, and reports<br>
+      <strong>Input mask</strong> -> A template for the characters that gives a specific format for the data in a given field<br>
+      <strong>Caption</strong> -> Display user-friendly or easy to understand for the field names in a table<br>
+      <strong>Default Value</strong> -> A value that automatically entered in the field when a new record is created<br>
+      <strong>Required</strong> -> Forces the user to input value in the given field, doesn't allow null value</p>
+    </div>
+
+    <div class="carousel">
+    <div class="carousel-track">
+      <img src="table.png">
+      <img src="table_properties.png">
+      <img src="table_data_types.png">
+    </div>
+    <button class="carousel-btn prev">‹</button>
+    <button class="carousel-btn next">›</button>
+  </div>
+
+  </div>
+</div>
+</div>
+
+<div class="introWrapp">
+  <div class="intro">
+    <h2>Relationship</h2>
+    <div class="subintro">
+      <p>Relationship?</p>
+      <span class="toggleIconn">+</span>
+    </div>
+    <img src="relationship.jpg" class="hoverImg">
+  </div>
+  <div class="expPan">
+    <div class="expInn">
+
+      <div class="expContent">
+      <h3>Relationship</h3>
+      <p>Relationship in Microsoft Access is a connection between two or more tables that defines how the data in those tables are related to each other. Creating relationships help ensure data integrity, enforce referential integrity, and to be able to create queries that combine data from multiple tables.</p>
+      <br>
+      <p><strong>Enforce Referential Integrity</strong> -> A rule that ensures relationships between tables stay consistent, accurate, and valid, preventing orphaned records. Enforce Referential Integrity prevents deleting or changing a record that is still related with the original parent record. There are also cascade options: Cascade Update and Cascade Delete.</p>
+      <br>
+      <p><strong>Cascade Update Related Fields</strong> -> A database relational integrity that automatically updates foreign key values in tables when the original primary key in the parent table is changed. To enable cascade update, you must first check Enforce Referential Integrity then check Cascade Update Related Fields.</p>
+      <br>
+      <p><strong>Cascade Delete Referential Fields</strong> -> A database relational integrity that automatically removes a record in a related table when the original parent record is deleted. To enable cascade update, you must first check Enforce Referential Integrity then check Cascade Delete Related Fields.</p>
+    </div>
+      <div class="carousel">
+  <div class="carousel-track">
+    <img src="relationships.png">
+    <img src="relationships_cascade.png">
+  </div>
+  <button class="carousel-btn prev">‹</button>
+  <button class="carousel-btn next">›</button>
+</div>
+    
+    </div>
+  </div>
+</div>
+
+<div class="introWrapp">
+  <div class="intro">
+    <h2>Form</h2>
+    <div class="subintro">
+      <p>What is a Form?</p>
+      <span class="toggleIconn">+</span>
+    </div>
+    <img src="form.jpg" class="hoverImg">
+  </div>
+  <div class="expPan">
+    <div class="expInn">
+      <div class="expContent">
+      <h3>Form</h3>
+      <p>Form in Microsoft Access is a database object that provides a user-friendly interface for inputting, changing, displaying data from tables or queries. There are 4 ways to create a form in Microsoft Access: Form, Form Design, Form Blank, and Form Wizard.</p>
+      <br>
+      <p><strong>Form</strong> -> Automatically creates a form from the chosen table or query.<br>
+      <strong>Form Design</strong> -> Create a form from scratch with a grid template.<br>
+      <strong>Form Blank</strong> -> Create a form from scratch with a blank page.<br>
+      <strong>Form Wizard</strong> -> Create a customizable form based on your preference from the chosen table or query.</p>
+      <br>
+      <p>Components in creating a form design or blank form:<br>
+      <strong>Text Box</strong> -> Add the field and input in creating a form. Allows users to input new data or change data.<br>
+      <strong>Label</strong> -> Add a text in creating a form.<br>
+      <strong>Button</strong> -> Add a button for record navigation, record operations, form operations, application control, and many more.<br>
+      <strong>Property Sheet</strong> -> To view and edit specific properties in the form.</p>
+      </div>
+      <div class="carousel">
+  <div class="carousel-track">
+    <img src="form.png">
+    <img src="form_propertysheet.png">
+    <img src="form_components.png">
+    <img src="create_form.png">
+    <img src="create_form_wizard.png">
+    <img src="create_form_design.png">
+    <img src="create_form_blank.png">
+  </div>
+  <button class="carousel-btn prev">‹</button>
+  <button class="carousel-btn next">›</button>
+</div>
+    </div>
+  </div>
+</div>
+
+<div class="introWrapp">
+  <div class="intro">
+    <h2>Query</h2>
+    <div class="subintro">
+      <p>What is a Query?</p>
+      <span class="toggleIconn">+</span>
+    </div>
+    <img src="query.jpg" class="hoverImg">
+  </div>
+  <div class="expPan">
+    <div class="expInn">
+      <div class="expContent">
+      <h3>Query</h3>
+      <p>Query in Microsoft Access is a request for data results and it is used for viewing data, changing, and adding data from one or more tables. There are two methods of creating queries: Query Wizard and Query Design.</p>
+      <br>
+      <p><strong>Query Wizard</strong> -> Create a customizable query based on your own preferences.<br>
+      <strong>Query Design</strong> -> Create a query from scratch by choosing data from different tables.</p>
+      <br>
+      <p>There are several actions in a query such as Query Append, Query Update, Query Crosstab, and Query Delete. To perform these actions, you must press run on the top-left corner in your Microsoft Access.<br>
+      <strong>Query Append</strong> -> A query action that retrieves data from one or more tables and adds them to the end of an existing table.<br>
+      <strong>Query Update</strong> -> A query action that adds, changes, or deletes data from an existing record in a table.<br>
+      <strong>Query Crosstab</strong> -> A query action that calculates a sum, average, or any other aggregate function then groups those results into two values, one in the row heading and one in the column heading.<br>
+      <strong>Query Delete</strong> -> A query action that removes specific data from one or more tables based on the given criteria.<br>
+      <strong>Query Make Table</strong> -> Creates new tables from data in existing tables or queries.</p>
+      <br>
+      <p>There are several components in the Query Design Grid in Microsoft Access such as field, table, sort, show, criteria, total function, and parameters.<br>
+      <strong>Field</strong> -> Displays the name of the data field in the query column.<br>
+      <strong>Table</strong> -> Displays the table of which the data field was taken from.<br>
+      <strong>Sort</strong> -> An optional row where you can order how the query results should be displayed.<br>
+      <strong>Criteria</strong> -> Enter an expression to filter out the field's data, only showing the results that are suitable for the criteria.<br>
+      <strong>Show</strong> -> A checkbox which you can decide whether to display the field's data in the query datasheet or not.<br>
+      <strong>Total</strong> -> Only appears when you enable the "Total" features in Access. It is used for grouping records and applying aggregate functions to summarize data.<br>
+      <strong>Parameters</strong> -> Used for the users to prompt input when the query runs.</p>
+      </div>
+      <div class="carousel">
+    <div class="carousel-track">
+    <img src="query.png">
+    <img src="query_wizard.png">
+    <img src="query_design.png">
+    <img src="query_components.png">
+    <img src="query_actions.png">
+  </div>
+  <button class="carousel-btn prev">‹</button>
+  <button class="carousel-btn next">›</button>
+</div>
+    </div>
+  </div>
+</div>
+
+<div class="introWrapp">
+  <div class="intro">
+    <h2>Report</h2>
+    <div class="subintro">
+      <p>What is a Report?</p>
+      <span class="toggleIconn">+</span>
+    </div>
+    <img src="report.jpg" class="hoverImg">
+  </div>
+  <div class="expPan">
+    <div class="expInn">
+      <div class="expContent">
+      <h3>Report</h3>
+      <p>Reports in Microsoft Access are used to view, format, and summarize data from tables or queries. There are a few methods to create a database in Microsoft access such as Report, Report Design, Blank Report, and Report Wizard.</p>
+      <br>
+      <p><strong>Report</strong> -> Automatically creates a report from the chosen table or query.<br>
+      <strong>Report Design</strong> -> Create a report from scratch with a grid template.<br>
+      <strong>Blank Report</strong> -> Create a report from scratch with a blank page.<br>
+      <strong>Report Wizard</strong> -> Create a customizable report based on your preference from the chosen table or query.</p>
+      </div>
+      <div class="carousel">
+  <div class="carousel-track">
+    <img src="report.png">
+    <img src="create_report.png">
+    <img src="create_report_wizard.png">
+    <img src="create_report_design.png">
+    <img src="create_blank_report.png">
+  </div>
+  <button class="carousel-btn prev">‹</button>
+  <button class="carousel-btn next">›</button>
+</div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.intro').forEach(intro => {
+  intro.addEventListener('click', () => {
+    const wrapper = intro.closest('.introWrapp');
+    const isActive = wrapper.classList.contains('active');
+    document.querySelectorAll('.introWrapp.active').forEach(w => {
+      if(w !== wrapper) w.classList.remove('active');
+    });
+    wrapper.classList.toggle('active', !isActive);
+  });
+});
+
+document.querySelectorAll('.carousel').forEach(carousel => {
+  const track = carousel.querySelector('.carousel-track');
+  const images = carousel.querySelectorAll('img');
+  const prevBtn = carousel.querySelector('.prev');
+  const nextBtn = carousel.querySelector('.next');
+  let index = 0;
+
+  function updateCarousel(){
+    const width = carousel.clientWidth;
+    track.style.transform = `translateX(-${index * width}px)`;
+  }
+
+  nextBtn.addEventListener('click', () => {
+    index = (index + 1) % images.length;
+    updateCarousel();
+  });
+
+  prevBtn.addEventListener('click', () => {
+    index = (index - 1 + images.length) % images.length;
+    updateCarousel();
+  });
+
+  window.addEventListener('resize', updateCarousel);
+});
+</script>
+
+</body>
+</html>
